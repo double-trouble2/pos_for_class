@@ -1,20 +1,113 @@
-import { Routes, Route } from 'react-router-dom';
-import { Layout } from 'antd';
+import React, { useState } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Layout, Menu, Button, theme } from 'antd';
+import {
+  DashboardOutlined,
+  ShoppingCartOutlined,
+  InboxOutlined,
+  HistoryOutlined,
+  SettingOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons';
 import './App.css';
 
-const { Content } = Layout;
+const { Header, Sider, Content } = Layout;
+
+import Dashboard from './pages/Dashboard';
+import Inventory from './pages/Inventory';
+import POS from './pages/POS';
+import SalesHistory from './pages/SalesHistory';
+
+import Settings from './pages/Settings';
 
 function App() {
+  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
+  const menuItems = [
+    {
+      key: '/',
+      icon: <DashboardOutlined />,
+      label: 'Dashboard',
+    },
+    {
+      key: '/pos',
+      icon: <ShoppingCartOutlined />,
+      label: 'POS',
+    },
+    {
+      key: '/inventory',
+      icon: <InboxOutlined />,
+      label: 'Inventory',
+    },
+    {
+      key: '/sales',
+      icon: <HistoryOutlined />,
+      label: 'Sales History',
+    },
+    {
+      key: '/settings',
+      icon: <SettingOutlined />,
+      label: 'Settings',
+    },
+  ];
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Content style={{ padding: '24px', background: '#f0f2f5' }}>
-        <Routes>
-          <Route path="/" element={<div><h1>POS System</h1><p>Welcome to the Point of Sale System</p></div>} />
-          {/* Add more routes here later */}
-        </Routes>
-      </Content>
+      <Sider trigger={null} collapsible collapsed={collapsed} theme="light" style={{ boxShadow: '2px 0 8px 0 rgba(29,35,41,.05)' }}>
+        <div className="demo-logo-vertical" style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem', color: '#1890ff' }}>
+          {collapsed ? 'POS' : 'Market POS'}
+        </div>
+        <Menu
+          theme="light"
+          mode="inline"
+          selectedKeys={[location.pathname]}
+          items={menuItems}
+          onClick={({ key }) => navigate(key)}
+        />
+      </Sider>
+      <Layout>
+        <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', alignItems: 'center', paddingRight: '24px' }}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: '16px',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <div style={{ flex: 1 }} />
+          <div style={{ fontWeight: 500 }}>Admin User</div>
+        </Header>
+        <Content
+          style={{
+            margin: '24px 16px',
+            padding: 24,
+            minHeight: 280,
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+            overflow: 'auto'
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/pos" element={<POS />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/sales" element={<SalesHistory />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </Content>
+      </Layout>
     </Layout>
   );
 }
 
 export default App;
+

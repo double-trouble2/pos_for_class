@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ConfigProvider } from 'antd'
 import App from './App.jsx'
 import './index.css'
+import './i18n'
 
 const queryClient = new QueryClient()
 

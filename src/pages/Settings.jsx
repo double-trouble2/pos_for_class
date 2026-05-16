@@ -1,27 +1,50 @@
 import React from 'react';
-import { Card, Button, Typography, Space, message, Popconfirm, Divider } from 'antd';
-import { DeleteOutlined, WarningOutlined } from '@ant-design/icons';
+import { Card, Button, Typography, Space, message, Popconfirm, Divider, Select } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { DeleteOutlined, WarningOutlined, GlobalOutlined } from '@ant-design/icons';
 import { db } from '../db/db';
 
 const { Title, Paragraph, Text } = Typography;
 
 const Settings = () => {
+  const { t, i18n } = useTranslation();
+
   const handleClearData = async () => {
     try {
       await db.products.clear();
       await db.sales.clear();
       await db.categories.clear();
-      message.success('All data cleared successfully');
+      await db.customers.clear();
+      message.success(t('done'));
     } catch (error) {
-      message.error('Failed to clear data');
+      message.error('Failed');
     }
   };
 
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   return (
-    <Card title="System Settings">
+    <Card title={t('settings')}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div>
-          <Title level={4}>General Information</Title>
+          <Title level={4}>{t('language')}</Title>
+          <Select
+            defaultValue={i18n.language}
+            style={{ width: 200 }}
+            onChange={changeLanguage}
+            suffixIcon={<GlobalOutlined />}
+          >
+            <Select.Option value="en">English</Select.Option>
+            <Select.Option value="uz">O'zbekcha</Select.Option>
+          </Select>
+        </div>
+
+        <Divider />
+
+        <div>
+          <Title level={4}>System Information</Title>
           <Paragraph>
             <Text strong>App Name:</Text> Market POS System<br />
             <Text strong>Version:</Text> 1.0.0<br />
@@ -33,14 +56,10 @@ const Settings = () => {
         
         <div>
           <Title level={4} type="danger">Danger Zone</Title>
-          <Paragraph>
-            The following actions are irreversible. Please be careful.
-          </Paragraph>
           <Popconfirm
             title="Clear all data?"
-            description="This will delete all products and sales history. Are you sure?"
             onConfirm={handleClearData}
-            okText="Yes, Clear Everything"
+            okText="Yes"
             cancelText="No"
             icon={<WarningOutlined style={{ color: 'red' }} />}
           >

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Space, message, Card } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/db';
 
 const Inventory = () => {
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [editingId, setEditingId] = useState(null);
@@ -26,9 +28,9 @@ const Inventory = () => {
   const handleDelete = async (id) => {
     try {
       await db.products.delete(id);
-      message.success('Product deleted successfully');
+      message.success(t('done'));
     } catch (error) {
-      message.error('Failed to delete product');
+      message.error('Failed');
     }
   };
 
@@ -37,10 +39,10 @@ const Inventory = () => {
       const values = await form.validateFields();
       if (editingId) {
         await db.products.update(editingId, values);
-        message.success('Product updated successfully');
+        message.success(t('done'));
       } else {
         await db.products.add(values);
-        message.success('Product added successfully');
+        message.success(t('done'));
       }
       setIsModalOpen(false);
       form.resetFields();
@@ -50,13 +52,13 @@ const Inventory = () => {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Barcode', dataIndex: 'barcode', key: 'barcode' },
-    { title: 'Category', dataIndex: 'category', key: 'category' },
-    { title: 'Price', dataIndex: 'price', key: 'price', render: (price) => `$${price.toFixed(2)}` },
-    { title: 'Stock', dataIndex: 'stock', key: 'stock' },
+    { title: t('name'), dataIndex: 'name', key: 'name' },
+    { title: t('barcode'), dataIndex: 'barcode', key: 'barcode' },
+    { title: t('category'), dataIndex: 'category', key: 'category' },
+    { title: t('price'), dataIndex: 'price', key: 'price', render: (price) => `$${price.toFixed(2)}` },
+    { title: t('stock'), dataIndex: 'stock', key: 'stock' },
     {
-      title: 'Action',
+      title: t('actions'),
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
@@ -69,30 +71,32 @@ const Inventory = () => {
 
   return (
     <div>
-      <Card title="Inventory Management" extra={<Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>Add Product</Button>}>
+      <Card title={t('inventory')} extra={<Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>{t('add_product')}</Button>}>
         <Table columns={columns} dataSource={products} rowKey="id" />
       </Card>
 
       <Modal
-        title={editingId ? 'Edit Product' : 'Add New Product'}
+        title={editingId ? t('edit_product') : t('add_product')}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={() => setIsModalOpen(false)}
+        okText={t('save')}
+        cancelText={t('cancel')}
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Product Name" rules={[{ required: true }]}>
+          <Form.Item name="name" label={t('name')} rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="barcode" label="Barcode">
+          <Form.Item name="barcode" label={t('barcode')}>
             <Input />
           </Form.Item>
-          <Form.Item name="category" label="Category">
+          <Form.Item name="category" label={t('category')}>
             <Input />
           </Form.Item>
-          <Form.Item name="price" label="Price" rules={[{ required: true }]}>
+          <Form.Item name="price" label={t('price')} rules={[{ required: true }]}>
             <InputNumber min={0} style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="stock" label="Stock" rules={[{ required: true }]}>
+          <Form.Item name="stock" label={t('stock')} rules={[{ required: true }]}>
             <InputNumber min={0} style={{ width: '100%' }} />
           </Form.Item>
         </Form>

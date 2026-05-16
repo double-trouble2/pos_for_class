@@ -1,3 +1,4 @@
+import React from 'react';
 import { Search, Bell } from 'lucide-react';
 
 interface HeaderProps {

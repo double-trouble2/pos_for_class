@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         
         <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
           <div className="text-right">
-            <p className="text-sm font-semibold text-slate-800">Islombek</p>
+            <p className="text-sm font-semibold text-slate-800">Ibrohim</p>
             <p className="text-xs text-slate-500">Administrator</p>
           </div>
           <div className="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">

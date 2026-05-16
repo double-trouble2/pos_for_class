@@ -1,15 +1,24 @@
 {
+<<<<<<< HEAD
   "name": "sardor",
+=======
+  "name": "pos_for_class",
+>>>>>>> b571537bb77f8bd900f8b08f710df01d9a539e81
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+<<<<<<< HEAD
     "build": "tsc -b && vite build",
+=======
+    "build": "vite build",
+>>>>>>> b571537bb77f8bd900f8b08f710df01d9a539e81
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
@@ -26,14 +35,36 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.5.0",
+=======
+    "@ant-design/icons": "^6.2.3",
+    "@tanstack/react-query": "^5.100.10",
+    "antd": "^6.4.1",
+    "dayjs": "^1.11.20",
+    "dexie": "^4.4.2",
+    "dexie-react-hooks": "^4.4.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.15.0",
+    "recharts": "^3.8.1",
+    "zustand": "^5.0.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+>>>>>>> b571537bb77f8bd900f8b08f710df01d9a539e81
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+<<<<<<< HEAD
     "postcss": "^8.5.14",
     "tailwindcss": "^4.3.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
+=======
+>>>>>>> b571537bb77f8bd900f8b08f710df01d9a539e81
     "vite": "^8.0.12"
   }
 }
